@@ -18,16 +18,16 @@
         Copy the following <strong>token</strong> and paste it in the Zepp app.
       </p>
       
-      <!-- Input field with the token -->
+      <!-- Input field with the code -->
       <div class="relative flex items-center">
         <input
           type="text"
-          id="token-input"
+          id="code"
           class="w-full py-2 px-4 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
           readonly
         />
         <button
-          id="btn-copy"
+          id="copy-button"
           class="absolute right-2 bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:outline-none"
         >
           Copy
@@ -35,10 +35,10 @@
       </div>
 
       <!-- Success message -->
-      <p id="msg-copied" class="mt-4 text-sm text-green-500 hidden">Token copied!</p>
+      <p id="copy-message" class="mt-4 text-sm text-green-500 hidden">Code copied!</p>
       
       <!-- Error message with possible causes in red -->
-      <div id="msg-error" class="mt-4 text-red-500 hidden">
+      <div id="error-message" class="mt-4 text-red-500 hidden">
         <p>No token found in the URL. Possible causes of the error:</p>
         <ul class="list-disc list-inside mt-2 text-left">
           <li>Incorrect or malformed URL.</li>
@@ -50,29 +50,29 @@
 
     <script>
       // Get the "code" parameter from the URL
-      const urlSearchParams = new URLSearchParams(window.location.search);
-      const token = urlSearchParams.get("code");
-      const tokenInputField = document.getElementById("token-input");
-      const errorMessageBox = document.getElementById("msg-error");
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get("code");
+      const codeInput = document.getElementById("code");
+      const errorMessage = document.getElementById("error-message");
 
-      if (token) {
-        tokenInputField.value = token;
+      if (code) {
+        codeInput.value = code;
       } else {
-        // Show error message if no token is found
-        tokenInputField.value = "No token found in the URL.";
-        errorMessageBox.classList.remove("hidden");
+        // Show error message if no code is found
+        codeInput.value = "No code found in the URL.";
+        errorMessage.classList.remove("hidden");
       }
 
-      // Function to copy the token to clipboard
-      const copyButton = document.getElementById("btn-copy");
-      const successMessage = document.getElementById("msg-copied");
+      // Function to copy the code to clipboard
+      const copyButton = document.getElementById("copy-button");
+      const copyMessage = document.getElementById("copy-message");
 
       copyButton.addEventListener("click", function () {
-        navigator.clipboard.writeText(tokenInputField.value).then(function () {
-          // Show success message when the token is copied
-          successMessage.classList.remove("hidden");
+        navigator.clipboard.writeText(codeInput.value).then(function () {
+          // Show success message when the code is copied
+          copyMessage.classList.remove("hidden");
           setTimeout(function () {
-            successMessage.classList.add("hidden");
+            copyMessage.classList.add("hidden");
           }, 2000); // Hide the message after 2 seconds
         });
       });
